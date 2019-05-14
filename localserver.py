@@ -17,11 +17,6 @@ def hello():
     return "Hello World! I am alive."
 
 
-@route('/mscontrol')
-def answer():
-    return "Something is missing!"
-
-
 @route('/test/<name:re:[\w]+>')
 def regrouting(name):
     return "Your name is :" + name
@@ -53,16 +48,25 @@ def mousecontrol(name, action):
 
     return command + " " + width + " " + height
 
+def parsecommands(action):
+
+    if action.startswith("m") or action.startswith("a"):
+        command, position = action.split('x')
+        width, height = position.split('y')
+    else:
+        command = action
+
+    
+
+
 
 @route('/secure', method="POST")
 def secure():
     content = request.POST
-
-    print("content")
     stream = []
     for i, con in enumerate(content):
         stream.append(con)
-        print(i, i+1, stream[0].encode(encoding="latin1"))
+        # print(i, i+1, stream[0].encode(encoding="latin1"))
 
     incoming = BytesIO(bytearray(stream[0], encoding="latin1"))
     nonce, tag, ciphertext = [incoming.read(x) for x in (16, 16, -1)]
@@ -75,6 +79,6 @@ def secure():
     data = cipher.decrypt_and_verify(ciphertext, tag)
     #data = cipher.decrypt_and_verify(ciphertext, tag)
     print("data", data)
-
+    parsecommands(data)
 
 run(host="192.168.2.100", port=8080, debug=True)
