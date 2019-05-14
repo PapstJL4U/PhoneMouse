@@ -23,3 +23,4 @@ file_out = open("encrypted.bin", "wb")
 [ file_out.write(x) for x in (cipher.nonce, tag, ciphertext) ]
 print("cipher.nonce", cipher.nonce)
 print("ciphertext", ciphertext)
+

@@ -1,4 +1,4 @@
-from bottle import route, run, request
+from bottle import route, run, request, FormsDict
 import sys
 import guimovement as gm
 from Crypto.Cipher import AES
@@ -61,17 +61,19 @@ def secure():
     print("content")
     stream = []
     for i, con in enumerate(content):
-        print(i, con)
         stream.append(con)
-    print("stream:",stream[0])
-    nonce, tag, ciphertext = [BytesIO(stream[0].encode()).read(x) for x in (16, 16, -1)]
+        print(i, i+1, stream[0].encode(encoding="latin1"))
+
+    incoming = BytesIO(bytearray(stream[0], encoding="latin1"))
+    nonce, tag, ciphertext = [incoming.read(x) for x in (16, 16, -1)]
 
     # let's assume that the key is somehow available again
     with open("key.bin", "rb") as i:
         key = i.read()
-    print("key",str(key))
+
     cipher = AES.new(key, AES.MODE_EAX, nonce)
     data = cipher.decrypt_and_verify(ciphertext, tag)
+    #data = cipher.decrypt_and_verify(ciphertext, tag)
     print("data", data)
 
 
