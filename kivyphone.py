@@ -2,7 +2,7 @@
 
 import kivy
 kivy.require('1.0.6')
-
+import requests
 from glob import glob
 from random import randint
 from os.path import join, dirname
@@ -15,18 +15,18 @@ from kivy.network.urlrequest import UrlRequest
 """
 # FIXME this shouldn't be necessary
 from kivy.core.window import Window"""
-_ip = '192.169.0.3'
-pwl = []
-with open('entryfile', 'r', encoding='utf-8') as file:
-    for line in file:
-        pwl.append(line)
-
+_ip = '192.168.0.100'
 _code = pwl[0]
 _port = '8080'
+
 class TouchWidget(Widget):
 
-    _start = None
-    _end = None
+    def __init__(self):
+        _start = None
+        _end = None
+
+        with open("key.bin", "rb") as i:
+            _key = i.read()
 
     def command(self, touch, click):
         width, height = touch.pos
@@ -50,10 +50,9 @@ class TouchWidget(Widget):
         self.sendMouse(msg)
 
     def sendMouse(self, command):
-        url = _ip+':'+_port+'/mscontrol/'+_code+'/'+command
-        body = None
-        print(url)
-        req = UrlRequest(url, req_body=body)
+        res = requests.post(url='http://192.168.2.100:8080/secure',
+                            data=command,
+                            headers={'Content-Type': 'application/octet-stream'})
 
 class MouseApp(App):
 

@@ -19,6 +19,9 @@ def showCursor():
     x, y = pyautogui.position()
     pyautogui.alert(text='The Cursor is here: {},{}'.format(x,y), title='Position!', button='OK' )
 
+def  getScreenshot():
+    return pyautogui.screenshot()
+
 def click(button='left'):
     if button == 'left':
         pyautogui.click()

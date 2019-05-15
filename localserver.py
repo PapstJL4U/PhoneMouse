@@ -5,12 +5,6 @@ from Crypto.Cipher import AES
 from io import BytesIO
 
 hostip = '192.168.2.100'
-pwl = []
-# legit pws
-with open('entryfile', 'r', encoding='utf-8') as file:
-    for line in file:
-        pwl.append(line)
-
 
 @route('/hello')
 def hello():
@@ -26,12 +20,16 @@ def regrouting(name):
 @route('/mscontrol/<name:re:[\w]+>/<action:re:[ma]+x[0-9]+y[0-9]+>')
 @route('/mscontrol/<name:re:[\w]+>/<action:re:[rlcs]>')
 def mousecontrol(name, action):
-    if name not in pwl:
-        return "Name violation"
-    if action != "r" or action != "l" or action != "c" or action != "s":
+    return "Old method - no use"
+
+def parsecommands(action):
+
+    if action.startswith("m") or action.startswith("a"):
         command, position = action.split('x')
         width, height = position.split('y')
-    print(command, width, height)
+    else:
+        command = action
+
     if command == "c":
         sys.exit("Close via Command 'c'")
     elif command == "a":
@@ -44,19 +42,6 @@ def mousecontrol(name, action):
         gm.click("left")
     elif command == "s":
         gm.showCursor()
-        pass
-
-    return command + " " + width + " " + height
-
-def parsecommands(action):
-
-    if action.startswith("m") or action.startswith("a"):
-        command, position = action.split('x')
-        width, height = position.split('y')
-    else:
-        command = action
-
-    
 
 
 
