@@ -15,17 +15,16 @@ from kivy.network.urlrequest import UrlRequest
 """
 # FIXME this shouldn't be necessary
 from kivy.core.window import Window"""
-_ip = '192.168.0.100'
+_ip = '192.168.2.100'
 _port = '8080'
-
+_key = None
 class TouchWidget(Widget):
 
-    def __init__(self):
-        _start = None
-        _end = None
+    _start = None
+    _end = None
 
-        with open("key.bin", "rb") as i:
-            _key = i.read()
+    with open("key.bin", "rb") as i:
+         _key = i.read()
 
     def encrypt(self, msg):
         pass
@@ -54,9 +53,12 @@ class TouchWidget(Widget):
         self.sendMouse(msg)
 
     def sendMouse(self, command):
-        res = requests.post(url='http://192.168.2.100:8080/secure',
+        """res = requests.post(url='http://192.168.2.100:8080/secure',
                             data=command,
-                            headers={'Content-Type': 'application/octet-stream'})
+                            headers={'Content-Type': 'application/octet-stream'})"""
+        url = _ip+":"+_port+"/secure"
+        print(url)
+        res = UrlRequest(url=url, req_body=command, method="POST")
 
 class MouseApp(App):
 

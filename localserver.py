@@ -63,8 +63,8 @@ def secure():
     cipher = AES.new(key, AES.MODE_EAX, nonce)
     data = cipher.decrypt_and_verify(ciphertext, tag)
     #data = cipher.decrypt_and_verify(ciphertext, tag)
-    print("data", data)
-    parsecommands(data)
+    print("data", data.decode(encoding="utf-8"))
+    parsecommands(data.decode(encoding="utf-8"))
 
 @route('/unsecure', method="POST")
 def unsecure():
