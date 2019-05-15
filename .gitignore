@@ -105,4 +105,6 @@ pip-selfcheck.json
 #discretfile
 entryfile
 key
-.bin
+key.bin
+encrypted.bin
+tag.bin
