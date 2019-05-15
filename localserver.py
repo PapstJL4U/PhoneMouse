@@ -49,7 +49,9 @@ def parsecommands(action):
 def secure():
     content = request.POST
     stream = []
+    #print(content)
     for i, con in enumerate(content):
+        #print(i,con)
         stream.append(con)
         # print(i, i+1, stream[0].encode(encoding="latin1"))
 

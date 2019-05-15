@@ -99,10 +99,10 @@ pip-selfcheck.json
 
 # Output images...
 
-
 *.swp
 *.swo
 
-#disretfile
+#discretfile
 entryfile
 key
+.bin
