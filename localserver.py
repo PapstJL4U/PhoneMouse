@@ -66,4 +66,13 @@ def secure():
     print("data", data)
     parsecommands(data)
 
+@route('/unsecure', method="POST")
+def unsecure():
+    content = request.POST
+    stream = []
+    for i, con in enumerate(content):
+        stream.append(con)
+
+    parsecommands(stream[0])
+
 run(host="192.168.2.100", port=8080, debug=True)

@@ -16,7 +16,6 @@ from kivy.network.urlrequest import UrlRequest
 # FIXME this shouldn't be necessary
 from kivy.core.window import Window"""
 _ip = '192.168.0.100'
-_code = pwl[0]
 _port = '8080'
 
 class TouchWidget(Widget):
@@ -28,11 +27,16 @@ class TouchWidget(Widget):
         with open("key.bin", "rb") as i:
             _key = i.read()
 
+    def encrypt(self, msg):
+        pass
+
     def command(self, touch, click):
         width, height = touch.pos
         #result should be something like "ax2111y450", a single letter followed by xwidthyheight
         result = click+'x'+str(int(width))+'y'+str(int(height))
+
         return result
+
 
     def on_touch_down(self, touch):
         print("td", touch.pos)
