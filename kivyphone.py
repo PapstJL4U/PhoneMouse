@@ -1,7 +1,9 @@
-# qpy:kivy
+#-*-coding:utf8;-*-
+#qpy:2
+#qpy:kivy
+#Don't autoformat! It puts whitespaces into the above comments, which are used as guidelines for qpython.
 
 import kivy
-
 kivy.require('1.0.6')
 from glob import glob
 from Crypto.Cipher import AES
@@ -61,9 +63,6 @@ class TouchWidget(Widget):
         self.sendMouse(msg)
 
     def sendMouse(self, command):
-        """res = requests.post(url='http://192.168.2.100:8080/secure',
-                            data=command,
-                            headers={'Content-Type': 'application/octet-stream'})"""
         url = _protocol + _ip + ":" + _port + "/secure"
         print(url)
         res = UrlRequest(url=url, req_body=command, method="POST")

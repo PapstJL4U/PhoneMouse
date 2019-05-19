@@ -1,4 +1,4 @@
-title=Pictures
-author=Kivy team
+title=PhoneMouse
+author=PapstJL4U
 orientation=landscape
 fullscreen=1
