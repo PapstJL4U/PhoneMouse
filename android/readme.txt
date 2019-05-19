@@ -1,0 +1,1 @@
+in this part i put the java developed part, that works on the phone
