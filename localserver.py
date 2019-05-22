@@ -1,4 +1,4 @@
-from bottle import route, run, request, FormsDict
+from bottle import route, run, request, response
 import sys
 import guimovement as gm
 from Crypto.Cipher import AES
@@ -42,22 +42,27 @@ def parsecommands(action):
         gm.click("left")
     elif command == "s":
         gm.showCursor()
-
+    elif command =="screenshot":
+        img = gm.getScreenshot()
+        return img
 
 
 @route('/secure', method="POST")
 def secure():
     content = request.POST
     stream = []
-    #print(content)
+    print("content", content, len(content))
     for i, con in enumerate(content):
         #print(i,con)
+        #stream.write(bytearray(con, encoding="latin1"))
         stream.append(con)
-        # print(i, i+1, stream[0].encode(encoding="latin1"))
+        print(i, i+1, stream[i].encode(encoding="latin1"))
 
-    incoming = BytesIO(bytearray(stream[0], encoding="latin1"))
+    incoming = BytesIO(bytearray(content['command'], encoding="latin1"))
     nonce, tag, ciphertext = [incoming.read(x) for x in (16, 16, -1)]
 
+
+    print(nonce, "\n", tag, "\n", ciphertext)
     # let's assume that the key is somehow available again
     with open("key.bin", "rb") as i:
         key = i.read()
@@ -65,8 +70,13 @@ def secure():
     cipher = AES.new(key, AES.MODE_EAX, nonce)
     data = cipher.decrypt_and_verify(ciphertext, tag)
     #data = cipher.decrypt_and_verify(ciphertext, tag)
-    print("data", data.decode(encoding="utf-8"))
-    parsecommands(data.decode(encoding="utf-8"))
+    #print("data", data.decode(encoding="utf-8"))
+    rcontent = parsecommands(data.decode(encoding="utf-8"))
+    print("rcontent",str(rcontent))
+    if rcontent is not None:
+        response.status = 202
+        response.body = rcontent
+
 
 @route('/unsecure', method="POST")
 def unsecure():

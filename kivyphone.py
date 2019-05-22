@@ -16,6 +16,7 @@ from kivy.uix.scatter import Scatter
 from kivy.properties import StringProperty
 from kivy.uix.widget import Widget
 from kivy.network.urlrequest import UrlRequest
+import urllib
 
 """
 # FIXME this shouldn't be necessary
@@ -65,8 +66,9 @@ class TouchWidget(Widget):
     def sendMouse(self, command):
         url = _protocol + _ip + ":" + _port + "/secure"
         print(url)
-        res = UrlRequest(url=url, req_body=command, method="POST")
-
+        header = {'Content-Type': 'application/octet-stream'}
+        res = UrlRequest(url=url, req_body={'command',command}, req_headers=header,method="POST")
+        print(res)
 
 class MouseApp(App):
 

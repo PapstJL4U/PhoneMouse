@@ -9,6 +9,8 @@ print(res.content)
 print("data", data)
 #print("data utf", data.decode(encoding='utf-8'))
 res = requests.post(url='http://192.168.2.100:8080/secure',
-                   data=data,
+                   data= {'command' : data},
                    headers={'Content-Type': 'application/octet-stream'})
+print(data)
 print(res)
+print(res.raw)

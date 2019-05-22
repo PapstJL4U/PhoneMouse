@@ -2,12 +2,14 @@ from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
 
 data1 = "ax1920y1080"
-data2 = "s"
+data2 = "screenshot"
 data3 = "l"
-data = bytes(data1,'utf-8')
-key = get_random_bytes(16)
-key_out = open("key.bin", "wb")
-key_out.write(key)
+data = bytes(data2,'utf-8')
+#key = get_random_bytes(16)
+#key_out = open("key.bin", "wb")
+#key_out.write(key)
+with open("key.bin", "rb") as i:
+    key = i.read()
 cipher = AES.new(key, AES.MODE_EAX)
 ciphertext, tag = cipher.encrypt_and_digest(data)
 
