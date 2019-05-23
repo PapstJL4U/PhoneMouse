@@ -74,6 +74,7 @@ def secure():
     rcontent = parsecommands(data.decode(encoding="utf-8"))
     print("rcontent",str(rcontent))
     if rcontent is not None:
+        response.set_header('Content-Type','image/x-rgb')
         response.status = 202
         response.body = rcontent
 
